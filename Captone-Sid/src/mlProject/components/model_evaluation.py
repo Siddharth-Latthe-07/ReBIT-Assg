@@ -4,7 +4,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from src.mlProject.utils.common import save_json
 from pathlib import Path
 import joblib
+import json
 from src.mlProject.entity.config_entity import ModelEvaluationConfig
+
 
 class ModelEvaluation:
     def __init__(self, config: ModelEvaluationConfig):
@@ -22,7 +24,7 @@ class ModelEvaluation:
 
         accuracy = accuracy_score(actual, predicted)
         confusion = confusion_matrix(actual, predicted)
-        report = classification_report(actual, predicted)
+        report = classification_report(actual, predicted, output_dict=True)  # Use output_dict for tabular format
 
         return accuracy, precision, recall, f1, confusion, report
 
@@ -39,19 +41,30 @@ class ModelEvaluation:
         predicted_labels = model.predict(test_x)
 
         # Calculate metrics
-        accuracy, precision, recall, f1, confusion, report = self.eval_metrics(test_y, predicted_labels)
+        accuracy, precision, recall, f1, confusion, report_dict = self.eval_metrics(test_y, predicted_labels)
 
-        # Save metrics
+        # Convert classification_report to DataFrame
+        report_df = pd.DataFrame(report_dict).transpose()
+
+        # Save the classification report as a CSV file
+        report_csv_path = os.path.join(self.config.root_dir, "classification_report.csv")
+        report_df.to_csv(report_csv_path, index=True)
+
+        # Save other metrics
         scores = {
             "accuracy": accuracy,
             "precision": precision,
             "recall": recall,
             "f1_score": f1,
-            "confusion_matrix": confusion.tolist(),  # Convert to list for JSON serialization
-            "classification_report": report,
+            "confusion_matrix": confusion.tolist()  # Convert to list for JSON serialization
         }
 
-        # Save the metrics to a JSON file
-        save_json(path=Path(self.config.metric_file_name), data=scores)
+        # Format the JSON output with indentation
+        formatted_scores = json.dumps(scores, indent=4)
+
+        # Save the formatted metrics to a JSON file
+        with open(self.config.metric_file_name, 'w') as json_file:
+            json_file.write(formatted_scores)
 
         print(f"Model evaluation completed. Metrics saved to: {self.config.metric_file_name}")
+        print(f"Classification report saved to: {report_csv_path}")
