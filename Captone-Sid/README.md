@@ -4,23 +4,22 @@ repo contains an end-to-end project for working with ml pipelines
 
 
 
-#### create virtual env 
+#### 1. Create virtual env 
 in our base env we have many packages installed so we are using venv
 
 
-#### install req.txt
+#### 2. Install req.txt
 ```
 pip install -r requirements.txt
 ```
 
-#### writing project utility 
+#### 3. Writing project utility 
 logging,exceptions and utils module
 
 
 
 
-#### project workflows
-#### they need to be updated one after the other
+#### 4. Project workflows:- They need to be updated one after the other
 update config.yaml  (artifacts)
 update schema.yaml (column : data type)
 update params.yaml (all the parameter changes wrt to algo can be done in params.yaml)
