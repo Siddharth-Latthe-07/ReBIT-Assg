@@ -5,10 +5,10 @@ import setuptools
 
 __version__ = "0.0.0"
 
-REPO_NAME = "mlpipeline-example"
-AUTHOR_USER_NAME = "SetUAI"
+REPO_NAME = "ReBIT-Assg"
+AUTHOR_USER_NAME = "Siddharth-Latthe-07"
 SRC_REPO = "mlProject"
-AUTHOR_EMAIL = "chirantandatascience@gmail.com"
+AUTHOR_EMAIL = "siddharthlatthe@gmail.com"
 
 
 setuptools.setup(
