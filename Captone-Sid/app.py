@@ -50,7 +50,6 @@ with st.form("prediction_form"):
                 "CHEST PAIN": chest_pain
             }
 
-            # Ensure input data is a list of values in the correct order for prediction
             data = pd.DataFrame([data])
 
             obj = PredictionPipeline()
