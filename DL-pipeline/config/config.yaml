@@ -1,0 +1,65 @@
+# Configuration for the data ingestion pipeline
+
+artifacts_root: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion    # Root directory for all data ingestion artifacts
+  source_URL: https://github.com/Siddharth-Latthe-07/ReBIT-Assg/raw/refs/heads/main/Dataset/chickenfecalimages.zip # URL of the zipped data source
+  local_data_file: artifacts/data_ingestion/data.zip # Path to store the downloaded zip file
+  unzip_dir: artifacts/data_ingestion/data        # Directory where the zip file will be extracted (same as raw_data_dir)
+
+
+
+data_validation:
+  root_dir: artifacts/data_validation
+  unzip_data_dir:
+    - artifacts/data_ingestion/data/chickenfecalimages/Coccidiosis
+    - artifacts/data_ingestion/data/chickenfecalimages/Healthy
+
+  image_extensions:        
+    - .jpg
+    - .jpeg
+    - .png
+  STATUS_FILE: artifacts/data_validation/status.txt
+
+
+
+data_transformation:
+  input_dir: artifacts/data_ingestion/data/chickenfecalimages
+  output_dir: artifacts/data_transformation
+  image_size: [224, 224]  # Resize all images to 224x224
+  test_split_ratio: 0.2   # 20% for testing
+
+
+
+model_training:
+  root_dir: artifacts/model_training
+  base_model_path: artifacts/model_training/base_model.h5
+  updated_model_path: artifacts/model_training/updated_model.h5
+  image_size: ${params.IMAGE_SIZE}
+  batch_size: ${params.BATCH_SIZE}
+  epochs: ${params.EPOCHS}
+  learning_rate: ${params.LEARNING_RATE}
+  classes: ${params.CLASSES}
+
+
+
+model_evaluation:
+  root_dir: artifacts/model_evaluation
+  model_path: artifacts/model_training/updated_model.h5
+  test_data_dir: artifacts/data_transformation/test
+  evaluation_report: artifacts/model_evaluation/evaluation_report.json
+  image_size: ${params.IMAGE_SIZE}
+  batch_size: ${params.BATCH_SIZE}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,36 @@
+{
+    "test_loss": 3.973642037635727e-08,
+    "test_accuracy": 1.0,
+    "predicted_classes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+    ],
+    "true_classes": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+    ],
+    "class_labels": [
+        "Coccidiosis",
+        "Healthy"
+    ]
+}
